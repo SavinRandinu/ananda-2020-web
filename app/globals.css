@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-white text-ink antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  ::selection {
+    @apply bg-maroon text-white;
+  }
+}
+
+@layer components {
+  .container-narrow {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-28;
+  }
+
+  .heading-serif {
+    @apply font-serif text-3xl font-bold tracking-tight text-maroon md:text-4xl lg:text-5xl;
+  }
+
+  .eyebrow {
+    @apply inline-block text-xs font-semibold uppercase tracking-[0.25em] text-gold-700;
+  }
+
+  .gold-divider {
+    @apply mx-auto h-[2px] w-16 bg-gold;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-maroon px-7 py-3 text-sm font-semibold text-white shadow-elegant transition-all duration-300 hover:bg-maroon-700 hover:shadow-elegant-lg active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-maroon px-7 py-3 text-sm font-semibold text-maroon transition-all duration-300 hover:bg-maroon hover:text-white;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3 text-sm font-semibold text-maroon-900 shadow-elegant transition-all duration-300 hover:bg-gold-400 hover:shadow-elegant-lg active:scale-[0.98];
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdfaee;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #800000;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5c0000;
+}
