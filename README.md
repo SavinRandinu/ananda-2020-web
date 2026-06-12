@@ -119,4 +119,4 @@ All static content lives in `data/`. Replace the placeholder photos in `data/gal
 
 Built with care by the ACOBA 2020 Group design team.
 
-> _අප්පමාදො අමතපදං_: Wisdom shines through service.
+> _අප්පමාදො අමතපදං_: Heedfulness, Punctuality leads to Nirvana.
