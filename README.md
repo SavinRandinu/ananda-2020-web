@@ -119,4 +119,4 @@ All static content lives in `data/`. Replace the placeholder photos in `data/gal
 
 Built with care by the ACOBA 2020 Group design team.
 
-> _Apadana Sobhini Panna_: Wisdom shines through service.
+> _අප්පමාදො අමතපදං_: Wisdom shines through service.
