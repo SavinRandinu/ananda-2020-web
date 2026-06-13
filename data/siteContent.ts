@@ -3,7 +3,7 @@ export const siteContent = {
     name: "Ananda College",
     batch: "ACOBA 2020 Group",
     longName: "Ananda College Old Boys' Association",
-    motto: "Apadana Sobhini Panna",
+    motto: "අප්පමාදො අමතපදං",
     mottoTranslation: "Wisdom shines through service",
   },
   hero: {
