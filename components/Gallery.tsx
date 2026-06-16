@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { galleryItems, type GalleryItem } from "@/data/gallery";
+import { supabase } from "@/lib/supabase";
 import Reveal from "./Reveal";
 
 const spanClasses: Record<NonNullable<GalleryItem["span"]>, string> = {
@@ -15,23 +16,44 @@ const spanClasses: Record<NonNullable<GalleryItem["span"]>, string> = {
 
 export default function Gallery() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [items, setItems] = useState<GalleryItem[]>(galleryItems);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("gallery")
+          .select("*")
+          .order("created_at", { ascending: true });
+
+        if (error) {
+          console.warn("Failed to fetch gallery from Supabase:", error.message);
+        } else if (data && data.length > 0) {
+          setItems(data as GalleryItem[]);
+        }
+      } catch (err) {
+        console.warn("Error fetching gallery:", err);
+      }
+    };
+    fetchGallery();
+  }, []);
 
   const close = useCallback(() => setActiveIndex(null), []);
   const next = useCallback(
     () =>
       setActiveIndex((i) =>
-        i === null ? null : (i + 1) % galleryItems.length,
+        i === null ? null : (i + 1) % items.length,
       ),
-    [],
+    [items.length],
   );
   const prev = useCallback(
     () =>
       setActiveIndex((i) =>
         i === null
           ? null
-          : (i - 1 + galleryItems.length) % galleryItems.length,
+          : (i - 1 + items.length) % items.length,
       ),
-    [],
+    [items.length],
   );
 
   useEffect(() => {
@@ -49,7 +71,7 @@ export default function Gallery() {
     };
   }, [activeIndex, close, next, prev]);
 
-  const active = activeIndex !== null ? galleryItems[activeIndex] : null;
+  const active = activeIndex !== null ? items[activeIndex] : null;
 
   return (
     <section
@@ -68,7 +90,7 @@ export default function Gallery() {
         </Reveal>
 
         <div className="mt-14 grid auto-rows-[160px] grid-cols-2 gap-3 sm:auto-rows-[180px] md:auto-rows-[200px] md:grid-cols-3 md:gap-4 lg:grid-cols-4">
-          {galleryItems.map((item, idx) => (
+          {items.map((item, idx) => (
             <Reveal
               key={item.id}
               delay={(idx % 4) * 0.05}
