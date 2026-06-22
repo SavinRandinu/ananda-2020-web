@@ -1,16 +1,61 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { BookOpen, Download } from "lucide-react";
 import { siteContent } from "@/data/siteContent";
+import { supabase } from "@/lib/supabase";
 import Reveal from "./Reveal";
 
+interface MagazineData {
+  eyebrow: string;
+  title: string;
+  description: string;
+  coverImage: string;
+  downloadUrl: string;
+  readUrl: string;
+}
+
 export default function Magazine() {
-  const { magazine } = siteContent;
+  const [magazine, setMagazine] = useState<MagazineData>({
+    eyebrow: siteContent.magazine.eyebrow,
+    title: siteContent.magazine.title,
+    description: siteContent.magazine.description,
+    coverImage: siteContent.magazine.coverImage,
+    downloadUrl: siteContent.magazine.downloadUrl,
+    readUrl: siteContent.magazine.readUrl,
+  });
+
+  useEffect(() => {
+    const fetchMagazine = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("magazine")
+          .select("*")
+          .eq("id", 1)
+          .single();
+
+        if (error) {
+          console.warn("Failed to fetch magazine from Supabase:", error.message);
+        } else if (data) {
+          setMagazine({
+            eyebrow: data.eyebrow || siteContent.magazine.eyebrow,
+            title: data.title,
+            description: data.description,
+            coverImage: data.cover_image,
+            downloadUrl: data.download_url || "#",
+            readUrl: data.read_url || "#",
+          });
+        }
+      } catch (err) {
+        console.warn("Error fetching magazine:", err);
+      }
+    };
+    fetchMagazine();
+  }, []);
 
   return (
-    <section
-      id="magazine"
-      className="section-padding bg-cream/40"
-    >
+    <section id="magazine" className="section-padding bg-cream/40">
       <div className="container-narrow grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
         <Reveal className="lg:col-span-5">
           <div className="relative mx-auto w-full max-w-sm">
